@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Letter Morph Grid</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
+</head>
+<body>
+
+<div id="main"><div id="sketch"></div></div>
+
+<div id="sidebar">
+  <div class="grp">
+    <span id="lbl-pts" class="slider-label"></span>
+    <div class="dot-slider">
+      <input type="range" id="nPts">
+    </div>
+  </div>
+  <div class="grp">
+    <span id="lbl-dot" class="slider-label"></span>
+    <div class="dot-slider">
+      <input type="range" id="dotSize">
+    </div>
+  </div>
+  <div class="grp">
+    <span id="lbl-interp"></span>
+    <select id="interp-list"></select>
+  </div>
+  <div class="grp">
+    <span id="lbl-shape"></span>
+    <select id="shape-list"></select>
+  </div>
+  <div class="grp">
+    <button id="fillBtn"></button>
+  </div>
+
+  <div id="word-section">
+    <div id="word-input-row">
+      <input type="text" id="wordInput" placeholder="ADD WORD" maxlength="12" autocomplete="off" spellcheck="false">
+      <button id="addWordBtn">+</button>
+    </div>
+    <div id="word-buttons"></div>
+  </div>
+
+  <div id="grid-panel"></div>
+
+  <div class="grp">
+    <button id="exportSvgBtn"></button>
+    <button id="exportPngBtn"></button>
+  </div>
+</div>
+
+<script src="sketch.js"></script>
+</body>
+</html>

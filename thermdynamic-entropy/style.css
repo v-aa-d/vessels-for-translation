@@ -1,0 +1,206 @@
+@font-face {
+  font-family: 'ABC Diatype Mono';
+  src: url('fonts/diatype copy/ABCDiatypeSemi-Mono-Regular-Trial.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'ABC Diatype Mono';
+  src: url('fonts/diatype copy/ABCDiatypeSemi-Mono-Medium-Trial.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'ABC Diatype Mono';
+  src: url('fonts/diatype copy/ABCDiatypeSemi-Mono-Bold-Trial.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: #fff;
+  overflow: hidden;
+}
+
+canvas { display: block; }
+
+/* Typing happens directly on the rendered dot-matrix letters — this textarea
+   sits invisibly over the whole canvas so a click anywhere focuses it, but it
+   never renders its own visible text or caret. */
+#txt-input {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  resize: none;
+  background: transparent;
+  padding: 16px 20px;
+  color: rgba(0, 0, 0, 0.55);
+  font-family: 'ABC Diatype Mono', monospace;
+  font-size: 14px;
+  letter-spacing: 0.05em;
+  caret-color: rgba(0, 0, 0, 0.6);
+  cursor: text;
+}
+
+#txt-input::placeholder {
+  color: rgba(0, 0, 0, 0.25);
+}
+
+/* ── Controls ─────────────────────────────────────────────────────────────── */
+
+#controls {
+  position: fixed;
+  z-index: 2;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+/* Top row: font upload */
+#controls-top {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Font upload */
+#font-label {
+  font-family: 'ABC Diatype Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.2s;
+}
+
+#font-label:hover { color: rgba(0, 0, 0, 0.7); }
+
+#font-label.loaded { color: rgba(0, 0, 0, 0.55); }
+#font-label.loaded::after { content: ' (' attr(data-name) ')'; }
+
+#font-upload { display: none; }
+
+/* Sliders row */
+#controls-sliders {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px 24px;
+}
+
+.slider-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: nowrap;
+}
+
+#export-row {
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
+.slider-label {
+  font-family: 'ABC Diatype Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: rgba(0, 0, 0, 0.25);
+  width: 42px;
+  text-align: right;
+}
+
+#align-toggle {
+  display: flex;
+  gap: 4px;
+}
+
+.align-btn {
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  color: rgba(0, 0, 0, 0.35);
+  font-family: 'ABC Diatype Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  padding: 4px 8px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+
+.align-btn:hover {
+  color: rgba(0, 0, 0, 0.7);
+  border-color: rgba(0, 0, 0, 0.5);
+}
+
+.align-btn.active {
+  color: #fff;
+  background: rgba(0, 0, 0, 0.75);
+  border-color: rgba(0, 0, 0, 0.75);
+}
+
+.export-btn {
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  color: rgba(0, 0, 0, 0.55);
+  font-family: 'ABC Diatype Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  padding: 4px 8px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.export-btn:hover {
+  color: rgba(0, 0, 0, 0.85);
+  border-color: rgba(0, 0, 0, 0.5);
+}
+
+input[type="range"] {
+  width: 110px;
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 1px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.6);
+  margin-top: -3.5px;
+}
+
+input[type="range"]::-moz-range-track {
+  height: 1px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.6);
+  border: none;
+}

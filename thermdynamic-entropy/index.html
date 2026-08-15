@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>entropy type</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <textarea
+      id="txt-input"
+      maxlength="120"
+      autocomplete="off"
+      spellcheck="false"
+      placeholder="[type here]"
+    ></textarea>
+    <div id="controls">
+      <div id="controls-top">
+        <label id="font-label">
+          upload font
+          <input
+            type="file"
+            id="font-upload"
+            accept=".otf,.ttf"
+            tabindex="-1"
+          />
+        </label>
+      </div>
+      <div id="controls-sliders">
+        <div class="slider-row">
+          <span class="slider-label">entropy</span>
+          <input
+            type="range"
+            id="entropy-slider"
+            min="0"
+            max="100"
+            value="50"
+          />
+        </div>
+        <div class="slider-row">
+          <span class="slider-label">size</span>
+          <input
+            type="range"
+            id="size-slider"
+            min="1"
+            max="12"
+            value="3"
+            step="0.5"
+          />
+        </div>
+        <div class="slider-row">
+          <span class="slider-label">type size</span>
+          <input
+            type="range"
+            id="type-size-slider"
+            min="40"
+            max="500"
+            value="200"
+            step="5"
+          />
+        </div>
+        <div class="slider-row">
+          <span class="slider-label">line height</span>
+          <input
+            type="range"
+            id="line-height-slider"
+            min="0.5"
+            max="2.5"
+            value="1.15"
+            step="0.05"
+          />
+        </div>
+        <div class="slider-row" id="align-row">
+          <span class="slider-label">align</span>
+          <div id="align-toggle">
+            <button type="button" class="align-btn" data-align="left">left</button>
+            <button type="button" class="align-btn active" data-align="center">center</button>
+            <button type="button" class="align-btn" data-align="right">right</button>
+          </div>
+        </div>
+        <div class="slider-row" id="export-row">
+          <button type="button" id="export-png" class="export-btn">export png</button>
+          <button type="button" id="export-svg" class="export-btn">export svg</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="libraries/p5.min.js"></script>
+    <script src="sketch.js"></script>
+  </body>
+</html>
